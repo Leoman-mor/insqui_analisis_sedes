@@ -1,0 +1,18 @@
+Temperature at 2 Meters = T2M:
+The average air (dry bulb) temperature at 2 meters above the surface of the earth.
+
+Relative Humidity at 2 Meters = RH2M:
+The ratio of vapor pressure to the saturation vapor pressure with respect to a plane surface of pure water, expressed in percent.
+
+All Sky Surface Shortwave Downward Irradiance = ALLSKY_SFC_SW_DWN:
+The total solar irradiance incident (direct plus diffuse) on a horizontal plane at the surface of the earth under all sky conditions. An alternative term for the total solar irradiance is the "Global Horizontal Irradiance" or GHI.
+
+Precipitation Corrected = PRECTOTCORR:
+The average MERRA-2 bias corrected total precipitation at the surface of the earth.
+
+Wind Speed at 2 Meters = WS2M:
+The average of wind speed at 2 meters above the surface of the earth.
+Wind speed is provided from an average of a large area and may not represent a point location due to surface properties, elevation changes, and local weather phenomena.
+
+Evaporation over Land = EVLAND:
+The evaporation over land at the surface of the earth.
