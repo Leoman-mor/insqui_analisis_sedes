@@ -1,5 +1,5 @@
 # Territorial Risk Analysis using Geospatial Data
-## INSQUI – Exploratory Environmental & Climate Risk Project
+## INSQUI – Exploratory Environmental & Territorial Risk Project
 
 ---
 
@@ -7,7 +7,7 @@
 
 This project performs an **exploratory territorial risk analysis** for company locations in Colombia using **minimal geospatial input data**: type of on-site activity and geographic coordinates.
 
-It integrates **open climate and environmental datasets** to characterize the **contextual exposure** of each location, without relying on confidential operational or chemical inventory data.
+It integrates **open environmental and geodynamic datasets** to characterize the **contextual exposure** of each location, without relying on confidential operational, chemical, or inventory-level data.
 
 The resulting dataset is designed to support:
 
@@ -19,13 +19,13 @@ The resulting dataset is designed to support:
 
 ## Project Objective
 
-The main objective is to **assess relative environmental and climate-related territorial risk** of geographic locations by combining:
+The main objective is to **assess relative territorial risk exposure** of geographic locations by combining:
 
-- Climate context derived from NASA datasets
-- Environmental sensitivity based on protected areas (WDPA)
+- Environmental sensitivity (protected areas – WDPA)
+- Geodynamic and seismic context (USGS)
 - Type of on-site activity (contextual risk factor)
 
-The final vision is a framework where **a single geographic coordinate can be evaluated in terms of territorial risk exposure**, enabling comparative analysis across regions and activities.
+The final vision is a framework where **a geographic coordinate can be evaluated in terms of territorial risk**, enabling comparison across regions, activities, and environmental contexts.
 
 ---
 
@@ -33,9 +33,7 @@ The final vision is a framework where **a single geographic coordinate can be ev
 
 The base dataset originates from **INSQUI**, using **reported and publicly available data up to 2025**.
 
-[text](https://insqui.sical.gov.co/BI/tableros_insqui.html)
-
-INSQUI data provides the **geographic reference of company locations**, which serves as the foundation for all subsequent environmental and climate enrichment performed in this project.
+INSQUI data provides the **geographic reference of company locations** (coordinates and activity type), which serves as the foundation for all subsequent spatial and contextual enrichment performed in this project.
 
 No confidential, operational, or chemical inventory information is used.
 
@@ -53,23 +51,22 @@ Minimal structured dataset:
 | `latitud`        | Latitude |
 | `longitud`       | Longitude |
 
-This structure allows the analysis to scale easily to **hundreds or thousands of locations** while remaining computationally simple and reproducible.
+This structure allows the analysis to scale to **hundreds or thousands of locations**, while remaining computationally simple and reproducible.
 
 ---
 
 ## External Data Sources
 
-### NASA – Climate Data
+### USGS – Seismic and Geodynamic Data
 
-Open NASA datasets are used to characterize the **climatic context** of each coordinate, including:
+Open datasets from the **United States Geological Survey (USGS)** are used to characterize the **seismic and geodynamic context** of each coordinate, such as:
 
-- Aggregated climate indicators
-- Historical or long-term average climate behavior
-- Environmental conditions associated with geographic location
+- Historical seismic activity
+- Spatial distribution of seismic events
+- Relative seismic exposure of geographic zones
 
-The objective is **contextual characterization**, not short-term forecasting or event-level prediction.
+The objective is **territorial context characterization**, not short-term earthquake prediction.
 
-[text](https://power.larc.nasa.gov/parameters/)
 ---
 
 ### WDPA – World Database on Protected Areas
@@ -81,11 +78,9 @@ The **World Database on Protected Areas (WDPA)** is used to determine:
 
 This adds a critical **environmental sensitivity dimension**, relevant for:
 
-- Territorial risk assessment
-- Environmental impact considerations
-- Regulatory and planning context
-
-[text](https://www.protectedplanet.net/country/COL)
+- Territorial and environmental risk assessment
+- Impact analysis
+- Regulatory and land-use planning context
 
 ---
 
@@ -95,7 +90,7 @@ General workflow implemented in the project:
 
 1. Load and validate INSQUI coordinate data
 2. Spatial visualization of company locations
-3. Climate data integration using NASA sources
+3. Integration of seismic context using USGS data
 4. Environmental overlay with WDPA protected areas
 5. Feature construction and indicator generation
 6. Data normalization and scaling
@@ -111,7 +106,7 @@ General workflow implemented in the project:
 At its current stage, the project delivers:
 
 - Geospatial mapping of company locations
-- Climate-related contextual variables per coordinate
+- Seismic and geodynamic context indicators per coordinate
 - Environmental protection indicators (WDPA-based)
 - A clean analytical dataset ready for:
   - PCA
@@ -125,15 +120,15 @@ At its current stage, the project delivers:
 ### Included
 
 - Coordinate-based territorial analysis
-- Use of public and open datasets
+- Public and open data sources (INSQUI, USGS, WDPA)
 - Exploratory and comparative analytical approach
 
 ### Not Included (yet)
 
 - Chemical inventory or hazard-specific modeling
-- Event prediction models (e.g. extreme weather forecasting)
+- Event-level prediction models
 - Socioeconomic vulnerability indicators (e.g. DANE)
-- Seismic or geological risk layers
+- Climate trend or extreme weather modeling
 
 ---
 
@@ -143,9 +138,9 @@ Potential future developments include:
 
 - Construction of a **Composite Territorial Risk Index**
 - Integration with socioeconomic vulnerability indicators
-- Inclusion of seismic and geological risk layers
+- Climate and extreme weather layers
 - Automated territorial risk scoring per coordinate
-- Decision-support dashboards for inspection, planning, or SST analysis
+- Decision-support dashboards for SST, inspection, or planning
 
 ---
 
@@ -172,6 +167,6 @@ MSc Student – Data Analytics & Intelligence
 
 ## License
 
-This project uses **open public data sources** (NASA, WDPA) combined with **publicly reported INSQUI data (up to 2025)**.
+This project uses **open public data sources** (USGS, WDPA) combined with **publicly reported INSQUI data (up to 2025)**.
 
 Methodologies, transformations, and derived datasets are intended for **analytical, research, and exploratory purposes**.
