@@ -19,6 +19,62 @@ The resulting dataset is designed to support:
 
 ---
 
+## Conceptual Risk Framework
+
+This project is guided by a classical and widely used risk formulation:
+
+> **Risk = Threat × Vulnerability × Exposure**
+
+Rather than estimating absolute risk values, the objective is to **characterize and compare territorial risk conditions** using publicly available data.
+
+Each component of the equation is addressed as follows.
+
+---
+
+## Risk Components Mapping
+
+### Threat (Amenaza)
+
+Represents the presence and intensity of **potential hazardous phenomena** affecting a geographic location.
+
+In this project, *Threat* is represented by:
+
+- **Seismic and geodynamic context** derived from **USGS** data  
+  - historical seismic activity  
+  - spatial distribution of seismic events  
+  - relative seismic exposure around each coordinate  
+
+This component captures **natural hazard pressure at the territorial level**, without attempting event prediction.
+
+---
+
+### Vulnerability (Vulnerabilidad)
+
+Represents the **sensitivity of the territory** to potential impacts once a hazardous event occurs.
+
+In this project, *Vulnerability* is represented by:
+
+- **Environmental sensitivity indicators** derived from **WDPA**  
+  - presence of protected areas  
+  - proximity to environmentally sensitive zones  
+
+This component reflects **potential environmental impact and regulatory sensitivity** associated with the location.
+
+---
+
+### Exposure (Exposición)
+
+Represents the **presence of activities, assets, or systems** that may be affected by a hazardous event.
+
+In this project, *Exposure* is represented by:
+
+- **INSQUI-reported company locations**
+- **Type of on-site activity** (administrative, operational, storage, etc.)
+
+This component captures **where and how human and industrial activities are distributed across the territory**.
+
+---
+
 ## Project Motivation
 
 In Occupational Safety (SST) and Process Safety, risk analysis is usually centered on:
@@ -28,7 +84,7 @@ In Occupational Safety (SST) and Process Safety, risk analysis is usually center
 - equipment  
 - installations  
 
-However, **the territorial context where these systems are located is often overlooked**, despite being a key factor in exposure, vulnerability, and impact.
+However, **the territorial context where these systems are located is often overlooked**, despite being a key factor influencing threat, vulnerability, and exposure.
 
 This project starts from a simple premise:
 
@@ -71,28 +127,13 @@ This design enables scalability to **hundreds or thousands of locations**, while
 
 ### USGS – Seismic and Geodynamic Context
 
-Open datasets from the **United States Geological Survey (USGS)** are used to characterize the **seismic and geodynamic context** of each location, including:
-
-- spatial distribution of seismic events  
-- historical seismic activity around each coordinate  
-- relative exposure to seismic hazards  
-
-The objective is **territorial context characterization**, not earthquake prediction.
+Open datasets from the **United States Geological Survey (USGS)** are used to characterize the **seismic and geodynamic threat context** of each location.
 
 ---
 
 ### WDPA – World Database on Protected Areas
 
-The **World Database on Protected Areas (WDPA)** is used to identify:
-
-- whether a location lies **inside a protected area**
-- or its **proximity to environmentally protected zones**
-
-This adds an **environmental sensitivity layer**, relevant for:
-
-- territorial risk assessment  
-- environmental impact considerations  
-- land-use and regulatory context  
+The **World Database on Protected Areas (WDPA)** is used to characterize **environmental vulnerability and sensitivity** associated with each coordinate.
 
 ---
 
@@ -102,12 +143,12 @@ General workflow implemented so far:
 
 1. Load and validate INSQUI coordinate data  
 2. Spatial visualization of company locations  
-3. Integration of seismic context using USGS data  
-4. Environmental overlay with WDPA protected areas  
+3. Integration of seismic threat context (USGS)  
+4. Environmental vulnerability overlay (WDPA)  
 5. Construction of territorial indicators  
 6. Preparation of an analytical dataset ready for multivariate analysis  
 
-Future analytical steps (planned):
+Planned analytical steps:
 
 - normalization and scaling  
 - Principal Component Analysis (PCA)  
@@ -120,12 +161,13 @@ Future analytical steps (planned):
 At the current stage, the project delivers:
 
 - Geospatial mapping of INSQUI-reported locations  
-- Seismic and geodynamic context indicators per coordinate  
-- Environmental sensitivity indicators based on WDPA  
+- Territorial threat indicators (USGS-based)  
+- Environmental vulnerability indicators (WDPA-based)  
+- Exposure indicators derived from activity type  
 - A clean dataset ready for:
   - PCA  
   - clustering  
-  - BI and geospatial visualization tools  
+  - BI and geospatial visualization  
 
 ---
 
@@ -150,11 +192,11 @@ At the current stage, the project delivers:
 
 Potential next steps include:
 
-- Construction of a **Composite Territorial Risk Index**  
-- Integration of socioeconomic and demographic indicators  
-- Climate and extreme weather layers  
-- Automated territorial risk scoring per location  
-- Decision-support dashboards for SST and process safety  
+- Construction of a **Composite Territorial Risk Index**
+- Integration of socioeconomic vulnerability indicators
+- Climate and extreme weather layers
+- Automated territorial risk scoring per location
+- Decision-support dashboards for SST and process safety
 
 ---
 
@@ -163,8 +205,8 @@ Potential next steps include:
 The visualization layer focuses on:
 
 - interactive geospatial maps  
-- spatial distribution of risk-related indicators  
-- comparison across regions and activity types  
+- spatial comparison of threat, vulnerability, and exposure  
+- aggregated indicators by region and activity type  
 
 Dashboards are designed to be implemented using **Looker Studio**.
 
