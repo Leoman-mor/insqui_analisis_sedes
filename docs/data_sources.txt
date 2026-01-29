@@ -2,3 +2,4 @@ INSQUI = https://insqui.sical.gov.co/BI/tableros_insqui.html
 NASA POWER = https://power.larc.nasa.gov/parameters/
 WDPA = https://www.protectedplanet.net/country/COL
 USGS = https://earthquake.usgs.gov/earthquakes/search/
+DANE = https://dane.maps.arcgis.com/home/item.html?id=bb63fb9c6bc84cbeb2399e77ff20f504
