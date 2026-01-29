@@ -1,4 +1,4 @@
-# Territorial Risk Analysis using Geospatial Data
+# Territorial Risk Analysis using Geospatial Data  
 ## INSQUI – Exploratory Environmental & Territorial Risk Project
 
 ---
@@ -7,35 +7,47 @@
 
 This project performs an **exploratory territorial risk analysis** for company locations in Colombia using **minimal geospatial input data**: type of on-site activity and geographic coordinates.
 
-It integrates **open environmental and geodynamic datasets** to characterize the **contextual exposure** of each location, without relying on confidential operational, chemical, or inventory-level data.
+It integrates **open environmental and geodynamic datasets** to characterize the **contextual exposure of the territory** where industrial and service activities operate.
+
+The approach deliberately avoids confidential or operational data (e.g. inventories, quantities, processes), focusing instead on **territorial context as a first layer of risk analysis**.
 
 The resulting dataset is designed to support:
 
-- Multivariate analysis (PCA)
+- Exploratory multivariate analysis (PCA)
 - Unsupervised learning techniques (e.g. clustering)
-- Interactive dashboards and geospatial visualization (Looker Studio)
+- Geospatial visualization and dashboards (Looker Studio)
 
 ---
 
-## Project Objective
+## Project Motivation
 
-The main objective is to **assess relative territorial risk exposure** of geographic locations by combining:
+In Occupational Safety (SST) and Process Safety, risk analysis is usually centered on:
 
-- Environmental sensitivity (protected areas – WDPA)
-- Geodynamic and seismic context (USGS)
-- Type of on-site activity (contextual risk factor)
+- people  
+- substances  
+- equipment  
+- installations  
 
-The final vision is a framework where **a geographic coordinate can be evaluated in terms of territorial risk**, enabling comparison across regions, activities, and environmental contexts.
+However, **the territorial context where these systems are located is often overlooked**, despite being a key factor in exposure, vulnerability, and impact.
+
+This project starts from a simple premise:
+
+> **Risk does not start at the plant; it starts in the territory.**
 
 ---
 
 ## Data Source: INSQUI
 
-The base dataset originates from **INSQUI**, using **reported and publicly available data up to 2025**.
+The base dataset originates from **INSQUI – Inventario Nacional de Sustancias Químicas de Uso Industrial**, using **reported and publicly available data up to 2025**.
 
-INSQUI data provides the **geographic reference of company locations** (coordinates and activity type), which serves as the foundation for all subsequent spatial and contextual enrichment performed in this project.
+INSQUI provides the **geographic reference of company locations**, which serves as the backbone of the analysis.
 
-No confidential, operational, or chemical inventory information is used.
+Only the following information is used:
+
+- geographic coordinates  
+- type of on-site activity  
+
+No confidential, operational, or chemical inventory data is included.
 
 ---
 
@@ -51,67 +63,69 @@ Minimal structured dataset:
 | `latitud`        | Latitude |
 | `longitud`       | Longitude |
 
-This structure allows the analysis to scale to **hundreds or thousands of locations**, while remaining computationally simple and reproducible.
+This design enables scalability to **hundreds or thousands of locations**, while keeping the analysis reproducible and lightweight.
 
 ---
 
 ## External Data Sources
 
-### USGS – Seismic and Geodynamic Data
+### USGS – Seismic and Geodynamic Context
 
-Open datasets from the **United States Geological Survey (USGS)** are used to characterize the **seismic and geodynamic context** of each coordinate, such as:
+Open datasets from the **United States Geological Survey (USGS)** are used to characterize the **seismic and geodynamic context** of each location, including:
 
-- Historical seismic activity
-- Spatial distribution of seismic events
-- Relative seismic exposure of geographic zones
+- spatial distribution of seismic events  
+- historical seismic activity around each coordinate  
+- relative exposure to seismic hazards  
 
-The objective is **territorial context characterization**, not short-term earthquake prediction.
+The objective is **territorial context characterization**, not earthquake prediction.
 
 ---
 
 ### WDPA – World Database on Protected Areas
 
-The **World Database on Protected Areas (WDPA)** is used to determine:
+The **World Database on Protected Areas (WDPA)** is used to identify:
 
-- Whether a location lies **inside a protected area**
-- Or its **proximity to environmentally protected zones**
+- whether a location lies **inside a protected area**
+- or its **proximity to environmentally protected zones**
 
-This adds a critical **environmental sensitivity dimension**, relevant for:
+This adds an **environmental sensitivity layer**, relevant for:
 
-- Territorial and environmental risk assessment
-- Impact analysis
-- Regulatory and land-use planning context
+- territorial risk assessment  
+- environmental impact considerations  
+- land-use and regulatory context  
 
 ---
 
 ## Methodology
 
-General workflow implemented in the project:
+General workflow implemented so far:
 
-1. Load and validate INSQUI coordinate data
-2. Spatial visualization of company locations
-3. Integration of seismic context using USGS data
-4. Environmental overlay with WDPA protected areas
-5. Feature construction and indicator generation
-6. Data normalization and scaling
-7. Exploratory multivariate analysis  
-   - Principal Component Analysis (PCA)  
-   - Clustering (planned future stage)
-8. Generation of a dashboard-ready analytical dataset
+1. Load and validate INSQUI coordinate data  
+2. Spatial visualization of company locations  
+3. Integration of seismic context using USGS data  
+4. Environmental overlay with WDPA protected areas  
+5. Construction of territorial indicators  
+6. Preparation of an analytical dataset ready for multivariate analysis  
+
+Future analytical steps (planned):
+
+- normalization and scaling  
+- Principal Component Analysis (PCA)  
+- unsupervised clustering  
 
 ---
 
 ## Current Outputs
 
-At its current stage, the project delivers:
+At the current stage, the project delivers:
 
-- Geospatial mapping of company locations
-- Seismic and geodynamic context indicators per coordinate
-- Environmental protection indicators (WDPA-based)
-- A clean analytical dataset ready for:
-  - PCA
-  - Unsupervised machine learning
-  - Business intelligence and visualization tools
+- Geospatial mapping of INSQUI-reported locations  
+- Seismic and geodynamic context indicators per coordinate  
+- Environmental sensitivity indicators based on WDPA  
+- A clean dataset ready for:
+  - PCA  
+  - clustering  
+  - BI and geospatial visualization tools  
 
 ---
 
@@ -119,40 +133,40 @@ At its current stage, the project delivers:
 
 ### Included
 
-- Coordinate-based territorial analysis
-- Public and open data sources (INSQUI, USGS, WDPA)
-- Exploratory and comparative analytical approach
+- Coordinate-based territorial analysis  
+- Public and open data sources (INSQUI, USGS, WDPA)  
+- Exploratory and comparative analytical approach  
 
 ### Not Included (yet)
 
-- Chemical inventory or hazard-specific modeling
-- Event-level prediction models
-- Socioeconomic vulnerability indicators (e.g. DANE)
-- Climate trend or extreme weather modeling
+- Chemical inventory or substance-specific hazard modeling  
+- Event-level prediction models  
+- Climate trend or extreme weather analysis  
+- Socioeconomic vulnerability indicators (e.g. DANE)  
 
 ---
 
 ## Future Extensions
 
-Potential future developments include:
+Potential next steps include:
 
-- Construction of a **Composite Territorial Risk Index**
-- Integration with socioeconomic vulnerability indicators
-- Climate and extreme weather layers
-- Automated territorial risk scoring per coordinate
-- Decision-support dashboards for SST, inspection, or planning
+- Construction of a **Composite Territorial Risk Index**  
+- Integration of socioeconomic and demographic indicators  
+- Climate and extreme weather layers  
+- Automated territorial risk scoring per location  
+- Decision-support dashboards for SST and process safety  
 
 ---
 
 ## Visualization
 
-Planned visualization layer:
+The visualization layer focuses on:
 
-- Interactive geospatial maps
-- Risk comparison across regions
-- Aggregated indicators by type of activity
+- interactive geospatial maps  
+- spatial distribution of risk-related indicators  
+- comparison across regions and activity types  
 
-Visualization and reporting are implemented using **Looker Studio**.
+Dashboards are designed to be implemented using **Looker Studio**.
 
 ---
 
@@ -161,12 +175,12 @@ Visualization and reporting are implemented using **Looker Studio**.
 **Leonardo Guzmán**  
 Chemical Engineer  
 Occupational Safety & Chemical Risk Consultant  
-MSc Student – Data Analytics & Intelligence
+MSc Student – Data Analytics & Intelligence  
 
 ---
 
 ## License
 
-This project uses **open public data sources** (USGS, WDPA) combined with **publicly reported INSQUI data (up to 2025)**.
+This project uses **open public data sources** (INSQUI – reported data up to 2025, USGS, WDPA).
 
-Methodologies, transformations, and derived datasets are intended for **analytical, research, and exploratory purposes**.
+All methodologies, transformations, and derived datasets are intended for **analytical, research, and exploratory purposes**.
