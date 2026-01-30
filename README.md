@@ -1,44 +1,75 @@
 # Territorial Risk Analysis using Geospatial Data  
-## INSQUI – Exploratory Territorial Threat Analysis Project
+## INSQUI – Exploratory Territorial Risk Analysis Project
 
 ---
 
 ## Overview
 
-This project performs an **exploratory territorial threat analysis** for company locations in Colombia using **minimal geospatial input data**: type of on-site activity and geographic coordinates.
+This project develops an **exploratory territorial risk analysis** for company locations in Colombia using **minimal geospatial input data**: type of on-site activity and geographic coordinates.
 
-It integrates **open climate and geodynamic datasets** to characterize the **hazard context of the territory** where industrial and service activities operate.
+It integrates **open climate, geodynamic, and socioeconomic datasets** to characterize the **risk context of the territory** where industrial and service activities operate.
 
-The approach deliberately avoids confidential or operational data (e.g. inventories, quantities, processes), focusing instead on **territorial threats as a first analytical layer** for risk-informed decision-making.
+The approach deliberately avoids confidential or operational data (e.g. inventories, quantities, processes), focusing instead on **territorial-scale drivers of risk**.
 
 The resulting dataset is designed to support:
 
 - Exploratory multivariate analysis (PCA)
-- Construction of composite threat indices
+- Construction of composite territorial indices
 - Geospatial visualization and dashboards (Looker Studio)
 
 ---
 
 ## Conceptual Risk Framework
 
-This project is aligned with the classical risk formulation:
+The project follows a classical and widely accepted formulation:
 
-> **Risk = Threat × Vulnerability × Exposure**
+**Risk = Threat × Vulnerability × Exposure**
 
-At its current stage, the project focuses **exclusively on the Threat component**, understood as the **presence and intensity of potentially damaging natural phenomena** affecting a location.
+Rather than estimating absolute risk values, the objective is to **compare and characterize territorial risk patterns** across locations using publicly available data.
 
-Vulnerability and exposure are acknowledged as future extensions but are **not modeled yet**.
+Each component of the equation is addressed explicitly.
 
 ---
 
-## Threat Definition in This Project
+## Risk Components in This Project
 
-In this framework, **Threat (Amenaza)** represents **territorial hazard conditions**, independent of assets, inventories, or populations.
+### Threat (Amenaza)
 
-Threat is characterized through two main dimensions:
+Threat represents the **presence and intensity of potentially damaging natural phenomena** affecting a territory.
 
-- **Climate-related threats** (NASA)
-- **Seismic and geodynamic threats** (USGS)
+In this project, Threat is characterized using:
+
+- **Climate-related hazards** derived from NASA data  
+- **Seismic and geodynamic hazards** derived from USGS data  
+
+This component captures **natural hazard pressure at the territorial level**, without attempting event-level prediction.
+
+---
+
+### Vulnerability (Vulnerabilidad)
+
+Vulnerability represents the **susceptibility of the territory to suffer adverse impacts** when a hazardous event occurs, shaped by social, economic, and infrastructural conditions.
+
+In this project, Vulnerability is characterized using **DANE data**, including indicators related to:
+
+- population distribution  
+- basic needs and living conditions  
+- territorial and socioeconomic characteristics at municipal or regional scale  
+
+This component reflects **structural and social conditions that influence impact severity**, not environmental protection status.
+
+---
+
+### Exposure (Exposición)
+
+Exposure represents the **presence of activities and assets that may be affected** by hazardous events.
+
+In this project, Exposure is characterized using **INSQUI data**, specifically:
+
+- geographic location of reported sites  
+- type of on-site activity (administrative, operational, storage, etc.)  
+
+This component captures **where industrial and service activities are located within the territory**.
 
 ---
 
@@ -65,11 +96,11 @@ Minimal structured dataset:
 
 | Column           | Description |
 |------------------|-------------|
-| `tipo_actividad` | Type of site activity (administrative, operational, storage, etc.) |
-| `latitud`        | Latitude |
-| `longitud`       | Longitude |
+| tipo_actividad   | Type of site activity (administrative, operational, storage, etc.) |
+| latitud          | Latitude |
+| longitud         | Longitude |
 
-This structure allows the analysis to scale to **hundreds or thousands of locations** while remaining reproducible.
+This structure allows the analysis to scale to **hundreds or thousands of locations**, while remaining reproducible.
 
 ---
 
@@ -77,13 +108,15 @@ This structure allows the analysis to scale to **hundreds or thousands of locati
 
 ### NASA – Climate Hazard Context
 
-NASA open datasets are used to characterize **climate-related territorial threats**, including:
+NASA open datasets are used to characterize **climate-related territorial threats**, such as:
 
 - temperature variability  
-- precipitation behavior  
-- extreme climate indicators  
+- precipitation patterns  
+- indicators of extreme climate behavior  
 
-These variables are **not used directly**. Instead, they are synthesized using **Principal Component Analysis (PCA)**.
+Climate variables are synthesized using **Principal Component Analysis (PCA)**.
+
+Five principal components were selected, representing dominant climate threat patterns.
 
 ---
 
@@ -95,41 +128,128 @@ USGS open datasets are used to characterize **seismic and geodynamic threats**, 
 - magnitude-related indicators  
 - spatial proximity to seismic activity  
 
-These variables are also synthesized using **PCA**.
+Seismic variables are synthesized using **PCA**, with three principal components retained.
+
+---
+
+### DANE – Socioeconomic Vulnerability Context
+
+Open datasets from **DANE** are used to characterize **territorial vulnerability**, including demographic and socioeconomic indicators at municipal or regional level.
+
+These indicators provide context on **structural conditions influencing potential impact**, complementing the hazard-focused threat component.
 
 ---
 
 ## Methodology
 
-### Climate Threat Modeling (NASA)
+### Threat Modeling
 
-1. Extraction of climate indicators per coordinate
-2. Standardization of variables
-3. Application of **PCA**
-4. Selection of **5 principal components**, capturing the dominant climate variability patterns
-5. Interpretation of components as climate threat dimensions
+**Climate Threat (NASA)**  
+- Extraction of climate indicators per coordinate  
+- Standardization of variables  
+- PCA application  
+- Selection of five principal components  
 
----
-
-### Seismic Threat Modeling (USGS)
-
-1. Extraction of seismic indicators around each coordinate
-2. Construction of seismic metrics
-3. Standardization of variables
-4. Application of **PCA**
-5. Selection of **3 principal components**, representing dominant seismic threat patterns
-
----
-
-### Composite Territorial Threat Index
+**Seismic Threat (USGS)**  
+- Extraction of seismic indicators around each coordinate  
+- Construction of seismic metrics  
+- Standardization of variables  
+- PCA application  
+- Selection of three principal components  
 
 Climate and seismic components are combined to construct a **Territorial Threat Index**, summarized into five interpretable categories:
 
-```python
-map_amenaza = {
-    0: "Amenaza por clima variable",
-    1: "Amenaza por clima húmedo",
-    2: "Amenaza por sismos",
-    3: "Amenaza por clima extremo",
-    4: "Amenaza alta combinada"
-}
+- Amenaza por clima variable  
+- Amenaza por clima húmedo  
+- Amenaza por sismos  
+- Amenaza por clima extremo  
+- Amenaza alta combinada  
+
+---
+
+### Vulnerability Modeling (DANE)
+
+- Selection of socioeconomic and demographic indicators  
+- Spatial linkage between DANE data and company locations  
+- Construction of vulnerability indicators at territorial scale  
+
+---
+
+### Exposure Modeling (INSQUI)
+
+- Spatial distribution of reported sites  
+- Classification by type of activity  
+- Aggregation and density analysis (planned)
+
+---
+
+## Current Outputs
+
+At the current stage, the project delivers:
+
+- Geospatial mapping of INSQUI-reported locations  
+- Climate threat components (5 PCA-based dimensions)  
+- Seismic threat components (3 PCA-based dimensions)  
+- Territorial threat classification  
+- Integrated dataset ready for:
+  - multivariate analysis  
+  - clustering  
+  - visualization  
+
+---
+
+## Scope & Limitations
+
+### Included
+
+- Territorial-scale threat modeling  
+- Socioeconomic vulnerability context  
+- Public and open data sources (INSQUI, NASA, USGS, DANE)  
+- Exploratory and comparative analysis  
+
+### Not Included (yet)
+
+- Chemical inventory or process-level hazard modeling  
+- Event-level prediction models  
+- Dynamic exposure modeling  
+- Full quantitative risk estimation  
+
+---
+
+## Future Extensions
+
+Planned next steps include:
+
+- Construction of a full **Territorial Risk Index**  
+- Integration of threat, vulnerability, and exposure into a single framework  
+- Temporal analysis of risk evolution  
+- Decision-support dashboards for SST and process safety  
+
+---
+
+## Visualization
+
+The visualization layer focuses on:
+
+- spatial distribution of threat and vulnerability  
+- comparison across regions and activity types  
+- aggregated territorial risk patterns  
+
+Dashboards are designed using **Looker Studio**.
+
+---
+
+## Author
+
+**Leonardo Guzmán**  
+Chemical Engineer  
+Occupational Safety & Chemical Risk Consultant  
+MSc Student – Data Analytics & Intelligence  
+
+---
+
+## License
+
+This project uses **open public data sources** (INSQUI – reported data up to 2025, NASA, USGS, DANE).
+
+All methodologies, transformations, and derived datasets are intended for **analytical, research, and exploratory purposes**.
