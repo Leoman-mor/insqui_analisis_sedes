@@ -9,13 +9,30 @@ This project develops an **exploratory territorial risk analysis** for company l
 
 It integrates **open climate, geodynamic, and socioeconomic datasets** to characterize the **risk context of the territory** where industrial and service activities operate.
 
-The approach deliberately avoids confidential or operational data (e.g. inventories, quantities, processes), focusing instead on **territorial-scale drivers of risk**.
+The approach deliberately avoids confidential or operational data (e.g. inventories, quantities, processes), focusing instead on **territorial-scale drivers of risk** that are often overlooked in traditional SST and process safety analyses.
 
-The resulting dataset is designed to support:
+The resulting dataset supports:
 
 - Exploratory multivariate analysis (PCA)
 - Construction of composite territorial indices
-- Geospatial visualization and dashboards (Looker Studio)
+- Geospatial visualization and decision-support dashboards
+
+---
+
+## Project Motivation
+
+In Occupational Safety (SST) and Process Safety, risk analysis is usually centered on:
+
+- people  
+- substances  
+- equipment  
+- installations  
+
+However, **the territorial context where these systems are located is often treated as a background variable**, despite strongly influencing hazard intensity, exposure patterns, and potential impact.
+
+This project is built on a simple but critical premise:
+
+**Risk does not start at the plant; it starts in the territory.**
 
 ---
 
@@ -25,9 +42,9 @@ The project follows a classical and widely accepted formulation:
 
 **Risk = Threat × Vulnerability × Exposure**
 
-Rather than estimating absolute risk values, the objective is to **compare and characterize territorial risk patterns** across locations using publicly available data.
+Rather than estimating absolute risk values, the objective is to **characterize and compare territorial risk conditions** using publicly available data.
 
-Each component of the equation is addressed explicitly.
+Each component is addressed independently and later integrated.
 
 ---
 
@@ -48,15 +65,15 @@ This component captures **natural hazard pressure at the territorial level**, wi
 
 ### Vulnerability (Vulnerabilidad)
 
-Vulnerability represents the **susceptibility of the territory to suffer adverse impacts** when a hazardous event occurs, shaped by social, economic, and infrastructural conditions.
+Vulnerability represents the **susceptibility of a territory to suffer adverse impacts** when a hazardous event occurs, shaped by social, economic, and structural conditions.
 
-In this project, Vulnerability is characterized using **DANE data**, including indicators related to:
+In this project, Vulnerability is characterized using **open socioeconomic data from DANE**, including indicators related to:
 
-- population distribution  
-- basic needs and living conditions  
-- territorial and socioeconomic characteristics at municipal or regional scale  
+- population characteristics  
+- basic living conditions  
+- territorial socioeconomic structure  
 
-This component reflects **structural and social conditions that influence impact severity**, not environmental protection status.
+This component reflects **structural conditions that influence impact severity**, not the presence of hazards themselves.
 
 ---
 
@@ -67,9 +84,9 @@ Exposure represents the **presence of activities and assets that may be affected
 In this project, Exposure is characterized using **INSQUI data**, specifically:
 
 - geographic location of reported sites  
-- type of on-site activity (administrative, operational, storage, etc.)  
+- type of on-site activity  
 
-This component captures **where industrial and service activities are located within the territory**.
+This component captures **where industrial and service activities are distributed across the territory**.
 
 ---
 
@@ -94,11 +111,11 @@ No confidential, operational, or chemical inventory data is included.
 
 Minimal structured dataset:
 
-| Column           | Description |
-|------------------|-------------|
-| tipo_actividad   | Type of site activity (administrative, operational, storage, etc.) |
-| latitud          | Latitude |
-| longitud         | Longitude |
+| Column         | Description |
+|----------------|-------------|
+| tipo_actividad | Type of site activity (administrative, operational, storage, etc.) |
+| latitud        | Latitude |
+| longitud       | Longitude |
 
 This structure allows the analysis to scale to **hundreds or thousands of locations**, while remaining reproducible.
 
@@ -114,8 +131,7 @@ NASA open datasets are used to characterize **climate-related territorial threat
 - precipitation patterns  
 - indicators of extreme climate behavior  
 
-Climate variables are synthesized using **Principal Component Analysis (PCA)**.
-
+Climate variables are synthesized using **Principal Component Analysis (PCA)**.  
 Five principal components were selected, representing dominant climate threat patterns.
 
 ---
@@ -134,30 +150,28 @@ Seismic variables are synthesized using **PCA**, with three principal components
 
 ### DANE – Socioeconomic Vulnerability Context
 
-Open datasets from **DANE** are used to characterize **territorial vulnerability**, including demographic and socioeconomic indicators at municipal or regional level.
+Open datasets from **DANE** are used to characterize **territorial vulnerability**, using demographic and socioeconomic indicators at municipal or regional level.
 
 These indicators provide context on **structural conditions influencing potential impact**, complementing the hazard-focused threat component.
 
 ---
 
-## Methodology
+## Methodology Summary
 
-### Threat Modeling
+The methodological workflow implemented so far includes:
 
-**Climate Threat (NASA)**  
-- Extraction of climate indicators per coordinate  
-- Standardization of variables  
-- PCA application  
-- Selection of five principal components  
+1. Spatial validation and visualization of INSQUI locations  
+2. Climate hazard modeling using NASA data and PCA (5 components)  
+3. Seismic hazard modeling using USGS data and PCA (3 components)  
+4. Construction of a **Territorial Threat Index**, combining climate and seismic patterns  
+5. Integration of socioeconomic vulnerability indicators (DANE)  
+6. Preparation of an integrated analytical dataset for visualization and comparison  
 
-**Seismic Threat (USGS)**  
-- Extraction of seismic indicators around each coordinate  
-- Construction of seismic metrics  
-- Standardization of variables  
-- PCA application  
-- Selection of three principal components  
+---
 
-Climate and seismic components are combined to construct a **Territorial Threat Index**, summarized into five interpretable categories:
+## Territorial Threat Classification
+
+The Territorial Threat Index is summarized into five interpretable categories:
 
 - Amenaza por clima variable  
 - Amenaza por clima húmedo  
@@ -165,21 +179,25 @@ Climate and seismic components are combined to construct a **Territorial Threat 
 - Amenaza por clima extremo  
 - Amenaza alta combinada  
 
----
-
-### Vulnerability Modeling (DANE)
-
-- Selection of socioeconomic and demographic indicators  
-- Spatial linkage between DANE data and company locations  
-- Construction of vulnerability indicators at territorial scale  
+These categories allow **comparative interpretation of territorial hazard conditions**, not absolute risk estimation.
 
 ---
 
-### Exposure Modeling (INSQUI)
+## Dashboard and Visualization
 
-- Spatial distribution of reported sites  
-- Classification by type of activity  
-- Aggregation and density analysis (planned)
+An interactive dashboard has been developed to visualize the results of the analysis:
+
+🔗 **Looker Studio Dashboard**  
+https://lookerstudio.google.com/reporting/cc88e672-a7d1-4737-ab51-68913ea8b533
+
+The dashboard enables:
+
+- visualization of company locations across the territory  
+- exploration of climate and seismic threat patterns  
+- comparison of territorial conditions across regions  
+- integration of multiple analytical layers in a single interface  
+
+The dashboard is intended as a **decision-support and exploratory tool**, not a compliance report.
 
 ---
 
@@ -191,10 +209,8 @@ At the current stage, the project delivers:
 - Climate threat components (5 PCA-based dimensions)  
 - Seismic threat components (3 PCA-based dimensions)  
 - Territorial threat classification  
-- Integrated dataset ready for:
-  - multivariate analysis  
-  - clustering  
-  - visualization  
+- Socioeconomic vulnerability context  
+- Interactive dashboard for exploration and communication  
 
 ---
 
@@ -216,26 +232,26 @@ At the current stage, the project delivers:
 
 ---
 
+## Final Risk Perspective
+
+The current stage of the project provides a **territorial-level risk perspective**, where:
+
+- **Threat** is characterized through climate and seismic hazards  
+- **Vulnerability** is represented by socioeconomic territorial conditions  
+- **Exposure** is defined by the spatial distribution of reported activities  
+
+This framework establishes a **structured foundation for future risk integration**, where Threat × Vulnerability × Exposure can be combined into a comprehensive Territorial Risk Index.
+
+---
+
 ## Future Extensions
 
 Planned next steps include:
 
-- Construction of a full **Territorial Risk Index**  
-- Integration of threat, vulnerability, and exposure into a single framework  
+- Explicit integration of Threat, Vulnerability, and Exposure into a single index  
 - Temporal analysis of risk evolution  
-- Decision-support dashboards for SST and process safety  
-
----
-
-## Visualization
-
-The visualization layer focuses on:
-
-- spatial distribution of threat and vulnerability  
-- comparison across regions and activity types  
-- aggregated territorial risk patterns  
-
-Dashboards are designed using **Looker Studio**.
+- Refinement of exposure metrics  
+- Decision-support dashboards for SST and process safety applications  
 
 ---
 
